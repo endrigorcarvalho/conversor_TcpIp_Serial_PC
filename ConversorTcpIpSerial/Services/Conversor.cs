@@ -14,16 +14,24 @@ namespace ConversorTcpIpSerial.Services
         public Serial Serial { get; set; }
         public TcpIp TcpIp { get; set; }
 
+        private Action<byte[]> _actionReceiverDataSerial;
+
+        private Action<byte[]> _actionReceiverDataTcpIp;
+
+
         public Conversor()
         {
             Serial = new Serial();
             TcpIp = new TcpIp();
         }
 
+#region Config Serial
 
-        public bool StartSerial(string portName = "COM1", int baudrate = 9600, Parity parity = Parity.None, int dataBits = 8, StopBits stopBits = StopBits.One)
+
+        public bool StartSerial(string portName = "COM1", int baudrate = 9600, Parity parity = Parity.None, int dataBits = 8, StopBits stopBits = StopBits.One, Action<byte[]> actionReceiverData = null)
         {
-            return Serial.ConfigureSerial(portName, baudrate, parity, dataBits, stopBits);
+            _actionReceiverDataSerial = actionReceiverData;
+            return Serial.ConfigureSerial(portName, baudrate, parity, dataBits, stopBits, ReceiveMessageSerial);
         }
 
 
@@ -32,10 +40,17 @@ namespace ConversorTcpIpSerial.Services
             return Serial.CloseSerial();
         }
 
-        public bool StartServer(IPAddress ipServer, int portServer, Action<byte[]> actionReceiverByte)
+
+#endregion
+
+#region Config Socket TCP/IP
+
+        public bool StartServer(IPAddress ipServer, int portServer, Action<byte[]> actionReceiverData)
         {
             //return TcpIp.StartServer(ipServer, portServer, receiverByte);
-            return TcpIp.StartServer(ipServer, portServer, actionReceiverByte);
+
+            _actionReceiverDataTcpIp = actionReceiverData;
+            return TcpIp.StartServer(ipServer, portServer, ReceiveMessageTcpIp);
         }
 
 
@@ -44,10 +59,29 @@ namespace ConversorTcpIpSerial.Services
             return TcpIp.StopServer();
         }
 
-        public void SendMessageTcpIp(byte[] message)
+#endregion
+        public bool SendMessageTcpIp(byte[] message)
         {
+            return TcpIp.SendMessage(message);
+        }
+
+        public bool SendMessageSerial(byte[] message)
+        {
+            return Serial.WriteSerial(message);
+        }
+
+        public void ReceiveMessageSerial(byte[] message)
+        {
+            _actionReceiverDataSerial(message);
             TcpIp.SendMessage(message);
         }
+
+        public void ReceiveMessageTcpIp(byte[] message)
+        {
+            _actionReceiverDataTcpIp(message);
+            Serial.WriteSerial(message);
+        }
+
 
     }
 }

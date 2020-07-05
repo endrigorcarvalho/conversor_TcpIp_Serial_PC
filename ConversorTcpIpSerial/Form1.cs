@@ -23,6 +23,7 @@ namespace ConversorTcpIpSerial
 
         private delegate void SafeCallDelegate(string text);
 
+      
         public Form1()
         {
             InitializeComponent();
@@ -30,14 +31,25 @@ namespace ConversorTcpIpSerial
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            // Config Tcp/IP
-            tbIpServer.Text = TcpIp.GetIp().ToString();
+
+            foreach (var IpString in TcpIp.GetArrayIp())
+            {
+                cbIpServer.Items.Add(IpString);
+            }
+            cbIpServer.SelectedIndex = 0;
+            //cbIpServer.SelectedIndex = cbIpServer.Items.Count-1;
+
+
             tbPortServer.Text = "599";
 
 
             // Config Serial
-            tbPortSerial.Text = "COM10";
-            
+            foreach(var serialString in Serial.GetPorts())
+            {
+                cbSerialPort.Items.Add(serialString);
+            }
+            cbSerialPort.SelectedIndex = 0;
+
             cbBaudRate.Items.Add(9600);
             cbBaudRate.Items.Add(19200);
             cbBaudRate.Items.Add(38400);
@@ -64,15 +76,6 @@ namespace ConversorTcpIpSerial
 
         }
 
-        private void label4_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
 
         private void btOpenDoor_Click(object sender, EventArgs e)
         {
@@ -81,14 +84,12 @@ namespace ConversorTcpIpSerial
             var data = int.Parse(tbDataBits.Text);
             var stop = (StopBits)Enum.Parse(typeof(StopBits), cbStopBits.Text);
 
-            bool resp = _conversor.StartSerial(tbPortSerial.Text, int.Parse(cbBaudRate.Text), (Parity)Enum.Parse(typeof(Parity), cbParity.Text), int.Parse(tbDataBits.Text), (StopBits)Enum.Parse(typeof(StopBits), cbStopBits.Text));
+            bool resp = _conversor.StartSerial(cbSerialPort.Text, int.Parse(cbBaudRate.Text), (Parity)Enum.Parse(typeof(Parity), cbParity.Text), int.Parse(tbDataBits.Text), (StopBits)Enum.Parse(typeof(StopBits), cbStopBits.Text), receiverByte);
             if(resp)
             {
-                statusStrip1.Items.Add("Conexão Serial Aberta");
                 Log("Conexão Serial Aberta");
             } else
             {
-                statusStrip1.Items.Add("Erro ao abrir Conexão Serial");
                 Log("Erro ao abrir Conexão Serial");
             }
                 
@@ -98,20 +99,18 @@ namespace ConversorTcpIpSerial
         {
             bool resp = _conversor.StopSerial();
             if (resp)
-            {
-                statusStrip1.Items.Add("Conexão Serial Fechada");
+            {                
                 Log("Conexão Serial Fechada");
             }
             else
-            {
-                statusStrip1.Items.Add("Erro ao fechar Conexão Serial");
+            {                
                 Log("Erro ao fechar Conexão Serial");
             }
         }
 
         private void btStartConnect_Click(object sender, EventArgs e)
         {
-            IPAddress iPAddress = IPAddress.Parse(tbIpServer.Text);
+            IPAddress iPAddress = IPAddress.Parse(cbIpServer.Text);
             if( _conversor.StartServer(iPAddress, int.Parse(tbPortServer.Text), receiverByte))
             {
                 Log("Servidor Tcp/Ip inicializado com sucesso...");
@@ -139,6 +138,8 @@ namespace ConversorTcpIpSerial
             else
             {
                 lbLog.Items.Add(msg);
+                statusStrip1.Items.Clear();
+                statusStrip1.Items.Add(msg);
             }
 
         }
@@ -157,7 +158,34 @@ namespace ConversorTcpIpSerial
 
         private void btEnviarMensagemTcpIp_Click(object sender, EventArgs e)
         {
-            _conversor.SendMessageTcpIp(Encoding.ASCII.GetBytes(tbMensagemTcpIp.Text));
+            if(_conversor.SendMessageTcpIp(Encoding.ASCII.GetBytes(tbMensagemTcpIp.Text)))
+            {
+                Log("Mensagem enviada com sucesso do servidor Tcp/Ip...");
+            } else
+            {
+                Log("Erro ao enviar mensagem do servidor Tcp/Ip...");
+            }
         }
+
+            
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            lbLog.Items.Clear();
+        }
+
+        private void btSendMessageSerial_Click(object sender, EventArgs e)
+        {
+            if (_conversor.SendMessageSerial(Encoding.ASCII.GetBytes(tbMensagemSerial.Text)))
+            {
+                Log("Mensagem enviada com sucesso para a serial...");
+            }
+            else
+            {
+                Log("Erro ao enviar mensagem para a serial...");
+            }
+        }
+
+  
     }
 }

@@ -29,14 +29,20 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.tbIpServer = new System.Windows.Forms.TextBox();
-            this.tbIpClient = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.btStartConnect = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cbIpServer = new System.Windows.Forms.ComboBox();
+            this.btEnviarMensagemTcpIp = new System.Windows.Forms.Button();
+            this.label9 = new System.Windows.Forms.Label();
+            this.tbMensagemTcpIp = new System.Windows.Forms.TextBox();
+            this.btCloseConectionTcpIp = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
             this.tbPortServer = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.cbSerialPort = new System.Windows.Forms.ComboBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.btSendMessageSerial = new System.Windows.Forms.Button();
+            this.tbMensagemSerial = new System.Windows.Forms.TextBox();
             this.btCloseDoor = new System.Windows.Forms.Button();
             this.cbStopBits = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -47,14 +53,10 @@
             this.cbBaudRate = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.btOpenDoor = new System.Windows.Forms.Button();
-            this.tbPortSerial = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lbLog = new System.Windows.Forms.ListBox();
-            this.btCloseConectionTcpIp = new System.Windows.Forms.Button();
-            this.tbMensagemTcpIp = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.btEnviarMensagemTcpIp = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -68,32 +70,9 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Ip Servidor";
             // 
-            // tbIpServer
-            // 
-            this.tbIpServer.Location = new System.Drawing.Point(27, 61);
-            this.tbIpServer.Name = "tbIpServer";
-            this.tbIpServer.Size = new System.Drawing.Size(175, 22);
-            this.tbIpServer.TabIndex = 1;
-            // 
-            // tbIpClient
-            // 
-            this.tbIpClient.Location = new System.Drawing.Point(27, 185);
-            this.tbIpClient.Name = "tbIpClient";
-            this.tbIpClient.Size = new System.Drawing.Size(175, 22);
-            this.tbIpClient.TabIndex = 2;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(24, 165);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(66, 17);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Ip Cliente";
-            // 
             // btStartConnect
             // 
-            this.btStartConnect.Location = new System.Drawing.Point(391, 51);
+            this.btStartConnect.Location = new System.Drawing.Point(391, 41);
             this.btStartConnect.Name = "btStartConnect";
             this.btStartConnect.Size = new System.Drawing.Size(106, 45);
             this.btStartConnect.TabIndex = 4;
@@ -103,6 +82,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.cbIpServer);
             this.groupBox1.Controls.Add(this.btEnviarMensagemTcpIp);
             this.groupBox1.Controls.Add(this.label9);
             this.groupBox1.Controls.Add(this.tbMensagemTcpIp);
@@ -111,20 +91,61 @@
             this.groupBox1.Controls.Add(this.tbPortServer);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.btStartConnect);
-            this.groupBox1.Controls.Add(this.tbIpServer);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.tbIpClient);
             this.groupBox1.Location = new System.Drawing.Point(29, 28);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(549, 324);
+            this.groupBox1.Size = new System.Drawing.Size(549, 400);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "TCP/IP";
             // 
+            // cbIpServer
+            // 
+            this.cbIpServer.FormattingEnabled = true;
+            this.cbIpServer.Location = new System.Drawing.Point(27, 62);
+            this.cbIpServer.Name = "cbIpServer";
+            this.cbIpServer.Size = new System.Drawing.Size(244, 24);
+            this.cbIpServer.TabIndex = 11;
+            // 
+            // btEnviarMensagemTcpIp
+            // 
+            this.btEnviarMensagemTcpIp.Location = new System.Drawing.Point(391, 177);
+            this.btEnviarMensagemTcpIp.Name = "btEnviarMensagemTcpIp";
+            this.btEnviarMensagemTcpIp.Size = new System.Drawing.Size(106, 45);
+            this.btEnviarMensagemTcpIp.TabIndex = 10;
+            this.btEnviarMensagemTcpIp.Text = "Enviar Mensagem";
+            this.btEnviarMensagemTcpIp.UseVisualStyleBackColor = true;
+            this.btEnviarMensagemTcpIp.Click += new System.EventHandler(this.btEnviarMensagemTcpIp_Click);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(24, 177);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(77, 17);
+            this.label9.TabIndex = 9;
+            this.label9.Text = "Mensagem";
+            // 
+            // tbMensagemTcpIp
+            // 
+            this.tbMensagemTcpIp.Location = new System.Drawing.Point(27, 197);
+            this.tbMensagemTcpIp.Name = "tbMensagemTcpIp";
+            this.tbMensagemTcpIp.Size = new System.Drawing.Size(244, 22);
+            this.tbMensagemTcpIp.TabIndex = 8;
+            // 
+            // btCloseConectionTcpIp
+            // 
+            this.btCloseConectionTcpIp.Location = new System.Drawing.Point(391, 105);
+            this.btCloseConectionTcpIp.Name = "btCloseConectionTcpIp";
+            this.btCloseConectionTcpIp.Size = new System.Drawing.Size(106, 45);
+            this.btCloseConectionTcpIp.TabIndex = 7;
+            this.btCloseConectionTcpIp.Text = "Fechar Conexão";
+            this.btCloseConectionTcpIp.UseVisualStyleBackColor = true;
+            this.btCloseConectionTcpIp.Click += new System.EventHandler(this.btCloseConectionTcpIp_Click);
+            // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(24, 98);
+            this.label8.Location = new System.Drawing.Point(24, 105);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(42, 17);
             this.label8.TabIndex = 5;
@@ -132,13 +153,17 @@
             // 
             // tbPortServer
             // 
-            this.tbPortServer.Location = new System.Drawing.Point(27, 118);
+            this.tbPortServer.Location = new System.Drawing.Point(27, 125);
             this.tbPortServer.Name = "tbPortServer";
-            this.tbPortServer.Size = new System.Drawing.Size(175, 22);
+            this.tbPortServer.Size = new System.Drawing.Size(244, 22);
             this.tbPortServer.TabIndex = 6;
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.cbSerialPort);
+            this.groupBox2.Controls.Add(this.label10);
+            this.groupBox2.Controls.Add(this.btSendMessageSerial);
+            this.groupBox2.Controls.Add(this.tbMensagemSerial);
             this.groupBox2.Controls.Add(this.btCloseDoor);
             this.groupBox2.Controls.Add(this.cbStopBits);
             this.groupBox2.Controls.Add(this.label7);
@@ -149,18 +174,51 @@
             this.groupBox2.Controls.Add(this.cbBaudRate);
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Controls.Add(this.btOpenDoor);
-            this.groupBox2.Controls.Add(this.tbPortSerial);
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Location = new System.Drawing.Point(613, 28);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(549, 324);
+            this.groupBox2.Size = new System.Drawing.Size(549, 400);
             this.groupBox2.TabIndex = 6;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Serial";
             // 
+            // cbSerialPort
+            // 
+            this.cbSerialPort.FormattingEnabled = true;
+            this.cbSerialPort.Location = new System.Drawing.Point(27, 61);
+            this.cbSerialPort.Name = "cbSerialPort";
+            this.cbSerialPort.Size = new System.Drawing.Size(175, 24);
+            this.cbSerialPort.TabIndex = 15;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(24, 336);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(77, 17);
+            this.label10.TabIndex = 14;
+            this.label10.Text = "Mensagem";
+            // 
+            // btSendMessageSerial
+            // 
+            this.btSendMessageSerial.Location = new System.Drawing.Point(344, 336);
+            this.btSendMessageSerial.Name = "btSendMessageSerial";
+            this.btSendMessageSerial.Size = new System.Drawing.Size(106, 45);
+            this.btSendMessageSerial.TabIndex = 12;
+            this.btSendMessageSerial.Text = "Enviar Mensagem";
+            this.btSendMessageSerial.UseVisualStyleBackColor = true;
+            this.btSendMessageSerial.Click += new System.EventHandler(this.btSendMessageSerial_Click);
+            // 
+            // tbMensagemSerial
+            // 
+            this.tbMensagemSerial.Location = new System.Drawing.Point(27, 356);
+            this.tbMensagemSerial.Name = "tbMensagemSerial";
+            this.tbMensagemSerial.Size = new System.Drawing.Size(175, 22);
+            this.tbMensagemSerial.TabIndex = 13;
+            // 
             // btCloseDoor
             // 
-            this.btCloseDoor.Location = new System.Drawing.Point(344, 149);
+            this.btCloseDoor.Location = new System.Drawing.Point(344, 189);
             this.btCloseDoor.Name = "btCloseDoor";
             this.btCloseDoor.Size = new System.Drawing.Size(106, 45);
             this.btCloseDoor.TabIndex = 12;
@@ -225,7 +283,6 @@
             this.cbBaudRate.Name = "cbBaudRate";
             this.cbBaudRate.Size = new System.Drawing.Size(175, 24);
             this.cbBaudRate.TabIndex = 5;
-            this.cbBaudRate.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // label3
             // 
@@ -246,13 +303,6 @@
             this.btOpenDoor.UseVisualStyleBackColor = true;
             this.btOpenDoor.Click += new System.EventHandler(this.btOpenDoor_Click);
             // 
-            // tbPortSerial
-            // 
-            this.tbPortSerial.Location = new System.Drawing.Point(27, 61);
-            this.tbPortSerial.Name = "tbPortSerial";
-            this.tbPortSerial.Size = new System.Drawing.Size(175, 22);
-            this.tbPortSerial.TabIndex = 1;
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -261,14 +311,13 @@
             this.label4.Size = new System.Drawing.Size(71, 17);
             this.label4.TabIndex = 3;
             this.label4.Text = "BaudRate";
-            this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // statusStrip1
             // 
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.statusStrip1.Location = new System.Drawing.Point(0, 536);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 647);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1302, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1184, 22);
             this.statusStrip1.TabIndex = 7;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -276,58 +325,33 @@
             // 
             this.lbLog.FormattingEnabled = true;
             this.lbLog.ItemHeight = 16;
-            this.lbLog.Location = new System.Drawing.Point(29, 370);
+            this.lbLog.Location = new System.Drawing.Point(29, 454);
             this.lbLog.Name = "lbLog";
             this.lbLog.Size = new System.Drawing.Size(1133, 148);
             this.lbLog.TabIndex = 8;
             // 
-            // btCloseConectionTcpIp
+            // button3
             // 
-            this.btCloseConectionTcpIp.Location = new System.Drawing.Point(391, 122);
-            this.btCloseConectionTcpIp.Name = "btCloseConectionTcpIp";
-            this.btCloseConectionTcpIp.Size = new System.Drawing.Size(106, 45);
-            this.btCloseConectionTcpIp.TabIndex = 7;
-            this.btCloseConectionTcpIp.Text = "Fechar Conexão";
-            this.btCloseConectionTcpIp.UseVisualStyleBackColor = true;
-            this.btCloseConectionTcpIp.Click += new System.EventHandler(this.btCloseConectionTcpIp_Click);
-            // 
-            // tbMensagemTcpIp
-            // 
-            this.tbMensagemTcpIp.Location = new System.Drawing.Point(27, 260);
-            this.tbMensagemTcpIp.Name = "tbMensagemTcpIp";
-            this.tbMensagemTcpIp.Size = new System.Drawing.Size(175, 22);
-            this.tbMensagemTcpIp.TabIndex = 8;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(24, 240);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(77, 17);
-            this.label9.TabIndex = 9;
-            this.label9.Text = "Mensagem";
-            // 
-            // btEnviarMensagemTcpIp
-            // 
-            this.btEnviarMensagemTcpIp.Location = new System.Drawing.Point(391, 249);
-            this.btEnviarMensagemTcpIp.Name = "btEnviarMensagemTcpIp";
-            this.btEnviarMensagemTcpIp.Size = new System.Drawing.Size(106, 45);
-            this.btEnviarMensagemTcpIp.TabIndex = 10;
-            this.btEnviarMensagemTcpIp.Text = "Enviar Mensagem";
-            this.btEnviarMensagemTcpIp.UseVisualStyleBackColor = true;
-            this.btEnviarMensagemTcpIp.Click += new System.EventHandler(this.btEnviarMensagemTcpIp_Click);
+            this.button3.Location = new System.Drawing.Point(29, 608);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(84, 25);
+            this.button3.TabIndex = 15;
+            this.button3.Text = "Limpar";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1302, 558);
+            this.ClientSize = new System.Drawing.Size(1184, 669);
+            this.Controls.Add(this.button3);
             this.Controls.Add(this.lbLog);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Conversor TCP/IP - Serial";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -341,15 +365,11 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox tbIpServer;
-        private System.Windows.Forms.TextBox tbIpClient;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btStartConnect;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btOpenDoor;
-        private System.Windows.Forms.TextBox tbPortSerial;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox cbBaudRate;
         private System.Windows.Forms.ComboBox cbParity;
@@ -367,6 +387,12 @@
         private System.Windows.Forms.Button btEnviarMensagemTcpIp;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox tbMensagemTcpIp;
+        private System.Windows.Forms.ComboBox cbIpServer;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btSendMessageSerial;
+        private System.Windows.Forms.TextBox tbMensagemSerial;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.ComboBox cbSerialPort;
     }
 }
 

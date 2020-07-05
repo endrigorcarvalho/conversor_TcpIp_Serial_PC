@@ -21,6 +21,8 @@ namespace ConversorTcpIpSerial.Entities
 
         private ManualResetEvent _flagThread = new ManualResetEvent(true);
 
+        Thread _trReceive;
+
         public static IPAddress GetIp()
         {
             
@@ -37,6 +39,11 @@ namespace ConversorTcpIpSerial.Entities
             return null;
         }
 
+        public static IPAddress[] GetArrayIp()
+        {
+            return Dns.GetHostEntry(Dns.GetHostName()).AddressList;
+        }
+
         public bool StartServer(IPAddress ipServer, int portServer, Action<byte[]> actionReceiverByte = null)
         {
             try
@@ -47,9 +54,9 @@ namespace ConversorTcpIpSerial.Entities
 
                 _flagThread.Set();
 
-                Thread trReceive = new Thread(ReceiveMessage);
-                trReceive.IsBackground = true;
-                trReceive.Start();
+                _trReceive = new Thread(ReceiveMessage);
+                _trReceive.IsBackground = true;
+                _trReceive.Start();
 
                 return true;
             }
@@ -101,8 +108,15 @@ namespace ConversorTcpIpSerial.Entities
         {
             if(Client.Connected)
             {
+                /*
                 StreamWriter stream = new StreamWriter(Client.GetStream());
-                stream.Write(message);
+                //stream.Write(message);
+                stream.WriteLine("Teste End");
+                */
+
+                NetworkStream stream = Client.GetStream();
+                stream.Write(message, 0, message.Length);
+                
 
                 return true;
 
